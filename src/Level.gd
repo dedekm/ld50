@@ -1,6 +1,6 @@
 extends Node2D
 
-var platformer := true
+export var platformer := true
 
 func _unhandled_input(event):
   if event is InputEventKey:

@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="DialogCanvas" type="CanvasLayer"]
+
+[node name="PlayerText" type="RichTextLabel" parent="."]
+visible = false
+margin_right = 200.0
+margin_bottom = 40.0
+bbcode_enabled = true
+
+[node name="NPCText" type="RichTextLabel" parent="."]
+visible = false
+margin_right = 200.0
+margin_bottom = 40.0
+bbcode_enabled = true
