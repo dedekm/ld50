@@ -6,11 +6,21 @@ const JUMP = 300
 
 var velocity := Vector2()
 var alive := true
+var attacking := false
 
 onready var level := get_node("/root/Level")
 
 func _ready():
   pass
+
+func _process(delta):
+  if Input.is_action_pressed("action"):
+    if level.platformer && !attacking:
+      attacking = true
+      $Attack/CollisionShape2D.set_deferred("disabled", false)
+      yield(get_tree().create_timer(0.3), "timeout")
+      attacking = false
+      $Attack/CollisionShape2D.set_deferred("disabled", true)
 
 func _physics_process(delta):
   if !alive && position.y > get_viewport().size.y + 100:
@@ -46,3 +56,6 @@ func _physics_process(delta):
 func die():
   alive = false
   $CollisionShape2D.set_deferred("disabled", true)
+
+func _on_Attack_area_entered(area):
+  area.queue_free()
