@@ -10,8 +10,10 @@ var dialog := []
 var dialog_index := 0
 var data : Dictionary
 
-onready var player_text : RichTextLabel = $PlayerText
-onready var npc_text : RichTextLabel = $NPCText
+onready var player_text_rect : NinePatchRect = $PlayerTextRect
+onready var player_text: RichTextLabel = player_text_rect.get_node("RichTextLabel")
+onready var npc_text_rect : NinePatchRect = $NPCTextRect
+onready var npc_text: RichTextLabel = npc_text_rect.get_node("RichTextLabel")
 
 func _ready():
   var file = File.new()
@@ -30,8 +32,8 @@ func start_dialog(actor_one: Node, actor_two: Node, dialog_key: String):
   dialog = data[dialog_key]
   dialog_index = 0
 
-  _set_text_position(player, player_text)
-  _set_text_position(npc, npc_text)
+  _set_text_position(player, player_text_rect)
+  _set_text_position(npc, npc_text_rect)
   next_dialog_step()
 
 func _process(delta):
@@ -42,18 +44,18 @@ func _process(delta):
     next_dialog_step()
 
 func next_dialog_step():
-  player_text.visible = false
-  npc_text.visible = false
+  player_text_rect.visible = false
+  npc_text_rect.visible = false
 
   if dialog.size() == dialog_index:
     stop_dialog()
     return
 
   if player_talking:
-    npc_text.visible = true
+    npc_text_rect.visible = true
     npc_text.bbcode_text = "[center]" + dialog[dialog_index] + "[/center]"
   else:
-    player_text.visible = true
+    player_text_rect.visible = true
     player_text.bbcode_text = "[center]" + dialog[dialog_index] + "[/center]"
 
   dialog_index += 1
@@ -63,5 +65,5 @@ func stop_dialog():
   player.movement_disabled = false
   active = false
 
-func _set_text_position(actor: Node, text: RichTextLabel):
-  text.rect_position = Vector2(actor.position.x - text.rect_size.x / 2, actor.position.y - 48)
+func _set_text_position(actor: Node, rect: Node):
+  rect.rect_position = Vector2(actor.position.x - rect.rect_size.x / 2, actor.position.y - rect.rect_size.y * 2)
