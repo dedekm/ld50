@@ -75,6 +75,6 @@ func die():
 
 func _on_ActionArea_area_entered(area):
   if level.platformer:
-    area.queue_free()
+    area.get_parent().queue_free()
   else:
-    _talk_to(area)
+    _talk_to(area.get_parent())

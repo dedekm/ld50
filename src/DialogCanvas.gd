@@ -11,11 +11,19 @@ var dialog_index := 0
 var data : Dictionary
 
 onready var player_text_rect : NinePatchRect = $PlayerTextRect
-onready var player_text: RichTextLabel = player_text_rect.get_node("RichTextLabel")
+onready var player_text : RichTextLabel = player_text_rect.get_node("RichTextLabel")
+onready var player_portrait : Sprite = player_text_rect.get_node("Portrait")
+
 onready var npc_text_rect : NinePatchRect = $NPCTextRect
 onready var npc_text: RichTextLabel = npc_text_rect.get_node("RichTextLabel")
+onready var npc_portrait : Sprite = npc_text_rect.get_node("Portrait")
 
 func _ready():
+  player_text_rect.visible = false
+  npc_text_rect.visible = false
+
+  player_portrait.set_texture(load("res://assets/portraits/portrait.png"))
+
   var file = File.new()
   print(FILE_NAME)
   if file.file_exists(FILE_NAME):
@@ -34,6 +42,8 @@ func start_dialog(actor_one: Node, actor_two: Node, dialog_key: String):
 
   _set_text_position(player, player_text_rect)
   _set_text_position(npc, npc_text_rect)
+  npc_portrait.set_texture(npc.portrait)
+
   next_dialog_step()
 
 func _process(delta):
@@ -62,6 +72,7 @@ func next_dialog_step():
   player_talking = !player_talking
 
 func stop_dialog():
+  yield(get_tree().create_timer(0.25), "timeout")
   player.movement_disabled = false
   active = false
 

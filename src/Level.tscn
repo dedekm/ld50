@@ -9,13 +9,18 @@
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
+platformer = false
+
+[node name="DialogCanvas" parent="." instance=ExtResource( 5 )]
+script = ExtResource( 6 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 120, 120 )
+position = Vector2( 144, 72 )
 
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 position = Vector2( 288, 96 )
-move_distance = 0
+portrait_name = "portrait"
+move_distance = 100
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -30,6 +35,3 @@ position = Vector2( 336, 240 )
 
 [node name="Tile4" parent="Tiles" instance=ExtResource( 2 )]
 position = Vector2( 528, 240 )
-
-[node name="DialogCanvas" parent="." instance=ExtResource( 5 )]
-script = ExtResource( 6 )
