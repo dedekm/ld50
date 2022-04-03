@@ -15,6 +15,7 @@ onready var level := get_node("/root/Level")
 onready var dialog_canvas := level.get_node("DialogCanvas")
 onready var action_area := $ActionArea
 onready var action_area_shape : CollisionShape2D = action_area.get_node("CollisionShape2D")
+onready var sprite := $AnimatedSprite
 
 func _ready():
   if !level.platformer:
@@ -71,6 +72,16 @@ func _physics_process(delta):
     velocity = velocity.normalized() * SPEED
 
   velocity = move_and_slide(velocity, Vector2.UP)
+
+  if velocity.x != 0 || velocity.y != 0:
+    sprite.play("move")
+  else:
+    sprite.play("idle")
+
+  if velocity.x > 0:
+    sprite.flip_h = false
+  elif velocity.x < 0:
+    sprite.flip_h = true
 
 func _talk_to(npc):
   movement_disabled = true
