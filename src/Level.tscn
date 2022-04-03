@@ -19,7 +19,19 @@ script = ExtResource( 6 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 132, 216 )
 
+[node name="CameraTransform" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera")
+
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 position = Vector2( 300, 252 )
 portrait_name = "portrait"
 move_distance = 100
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 132, 216 )
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 1028
+limit_bottom = 1028
+editor_draw_limits = true
