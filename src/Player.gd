@@ -3,7 +3,7 @@ extends KinematicBody2D
 const GRAVITY = 800
 const SPEED = 200
 const JUMP = 300
-const SIZE = 48
+const SIZE = 24
 
 var platformer := true
 var velocity := Vector2()

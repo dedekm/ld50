@@ -3,10 +3,10 @@
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 24 )
+extents = Vector2( 12, 12 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 24, 24 )
+extents = Vector2( 12, 12 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -15,7 +15,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="ActionArea" type="Area2D" parent="."]
-position = Vector2( 48, 0 )
+position = Vector2( 24, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
 shape = SubResource( 2 )
