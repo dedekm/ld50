@@ -3,7 +3,9 @@ extends KinematicBody2D
 const GRAVITY = 800
 const SPEED = 200
 const JUMP = 300
+const SIZE = 48
 
+var platformer := true
 var velocity := Vector2()
 var alive := true
 var movement_disabled := false
@@ -12,9 +14,11 @@ var action_disabled := false
 onready var level := get_node("/root/Level")
 onready var dialog_canvas := level.get_node("DialogCanvas")
 onready var action_area := $ActionArea
+onready var action_area_shape : CollisionShape2D = action_area.get_node("CollisionShape2D")
 
 func _ready():
-  pass
+  if !level.platformer:
+    change_gamestyle()
 
 func _process(delta):
   if movement_disabled:
@@ -23,10 +27,10 @@ func _process(delta):
   if Input.is_action_just_pressed("action"):
     if !action_disabled:
       action_disabled = true
-      action_area.get_node("CollisionShape2D").set_deferred("disabled", false)
+      action_area_shape.set_deferred("disabled", false)
       yield(get_tree().create_timer(0.3), "timeout")
       action_disabled = false
-      action_area.get_node("CollisionShape2D").set_deferred("disabled", true)
+      action_area_shape.set_deferred("disabled", true)
 
 func _physics_process(delta):
   if movement_disabled:
@@ -43,7 +47,13 @@ func _physics_process(delta):
     if Input.is_action_pressed("ui_right"):
       velocity.x += 1
 
-  if level.platformer:
+    if velocity.x != 0:
+      if platformer:
+        action_area.position.x = SIZE * velocity.x
+      else:
+        action_area.position.x = SIZE * 0.75 * velocity.x
+
+  if platformer:
     velocity.x *= SPEED
     velocity.y += GRAVITY * delta
 
@@ -68,13 +78,23 @@ func _talk_to(npc):
 
   dialog_canvas.start_dialog(self, npc, "test")
 
+func change_gamestyle():
+  platformer = !platformer
+
+  if !platformer:
+    action_area_shape.shape.extents = Vector2(SIZE * 0.75, SIZE)
+    action_area.position.x = SIZE * 0.75
+  else:
+    action_area_shape.shape.extents = Vector2(SIZE / 2, SIZE / 2)
+    action_area.position.x = SIZE
+
 func die():
-  if level.platformer:
+  if platformer:
     alive = false
     $CollisionShape2D.set_deferred("disabled", true)
 
 func _on_ActionArea_area_entered(area):
-  if level.platformer:
+  if platformer:
     area.get_parent().queue_free()
   else:
     _talk_to(area.get_parent())

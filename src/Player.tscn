@@ -15,9 +15,9 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="ActionArea" type="Area2D" parent="."]
+position = Vector2( 48, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
-position = Vector2( 48, 0 )
 shape = SubResource( 2 )
 disabled = true
 
