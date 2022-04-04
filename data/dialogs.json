@@ -2,7 +2,8 @@
   "test": [
     "Hello!",
     "Hello, stranger!",
+    ">Who are you?",
     "Testing dialog system...",
-    "What?"
+    "What?\nAre you crazy?"
   ]
 }

@@ -3,9 +3,9 @@ extends CanvasLayer
 const FILE_NAME = "res://data/dialogs.json"
 
 var active := false
-var player : Node
-var npc : Node
-var player_talking := false
+var player : Node2D
+var npc : Person
+var player_talking := true
 var dialog := []
 var dialog_index := 0
 var data : Dictionary
@@ -31,7 +31,7 @@ func _ready():
     data = parse_json(text)
     file.close()
 
-func start_dialog(actor_one: Node, actor_two: Node, dialog_key: String):
+func start_dialog(actor_one: Node, actor_two: Node):
   active = true
   player = actor_one
   npc = actor_two
@@ -39,13 +39,14 @@ func start_dialog(actor_one: Node, actor_two: Node, dialog_key: String):
   player.movement_disabled = true
   npc.stop()
 
-  dialog = data[dialog_key]
+  dialog = data[npc.dialog_name]
   dialog_index = 0
 
   _set_text_position(player, player_text_rect)
   _set_text_position(npc, npc_text_rect)
   npc_portrait.set_texture(npc.portrait)
 
+  player_talking = true
   next_dialog_step()
 
 func _process(delta):
@@ -63,15 +64,21 @@ func next_dialog_step():
     stop_dialog()
     return
 
+  var text : String = dialog[dialog_index]
+
+  if text[0] == ">":
+    text.erase(0, 1)
+  else:
+    player_talking = !player_talking
+
   if player_talking:
     npc_text_rect.visible = true
-    npc_text.bbcode_text = "[center]" + dialog[dialog_index] + "[/center]"
+    npc_text.bbcode_text = "[center]" + text + "[/center]"
   else:
     player_text_rect.visible = true
-    player_text.bbcode_text = "[center]" + dialog[dialog_index] + "[/center]"
+    player_text.bbcode_text = "[center]" + text + "[/center]"
 
   dialog_index += 1
-  player_talking = !player_talking
 
 func stop_dialog():
   yield(get_tree().create_timer(0.25), "timeout")

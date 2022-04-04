@@ -36,7 +36,9 @@ editor_draw_limits = true
 
 [node name="Strider" parent="Characters" instance=ExtResource( 4 )]
 position = Vector2( 1356, 396 )
+dialog_name = "test"
 
 [node name="Spider" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 756, 300 )
+dialog_name = "test"
 move_distance = 72

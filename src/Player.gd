@@ -97,7 +97,7 @@ func _physics_process(delta):
     attack_sprite.flip_h = true
 
 func _talk_to(npc):
-  dialog_canvas.start_dialog(self, npc, "test")
+  dialog_canvas.start_dialog(self, npc)
 
 func change_gamestyle():
   platformer = !platformer
