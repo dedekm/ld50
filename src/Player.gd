@@ -48,8 +48,8 @@ func _physics_process(delta):
   if movement_disabled:
     return
 
-#  if position.y > get_viewport().size.y + 100:
-#    get_tree().reload_current_scene()
+  if position.y > level.killzone:
+    get_tree().reload_current_scene()
 
   velocity.x = 0
 
