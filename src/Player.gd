@@ -10,10 +10,13 @@ var velocity := Vector2()
 var alive := true
 var movement_disabled := false
 var action_disabled := false
+var actionable : Node2D
+var using: Node2D
 
 onready var level := get_node("/root/Level")
 onready var dialog_canvas := level.get_node("DialogCanvas")
 onready var action_area := $ActionArea
+onready var action_icon := level.get_node("ActionIcon")
 onready var action_area_shape := $ActionArea/CollisionShape2D
 onready var body_sprite := $BodySprite
 onready var attack_sprite := $ActionArea/AttackSprite
@@ -24,12 +27,23 @@ func _ready():
 
 func _process(delta):
   if movement_disabled:
+    if using:
+      if Input.is_action_just_pressed("action"):
+        _stop_using()
+
     return
 
   if Input.is_action_just_pressed("action"):
-    if !action_disabled:
+    if actionable && !action_disabled:
       action_disabled = true
-      action_area_shape.set_deferred("disabled", false)
+
+      if platformer:
+        actionable.queue_free()
+      else:
+        if actionable.is_in_group("characters"):
+          _talk_to(actionable)
+        elif actionable.is_in_group("things"):
+          _use(actionable)
 
       if platformer:
         attack_sprite.visible = true
@@ -42,7 +56,6 @@ func _process(delta):
       yield(get_tree().create_timer(0.15), "timeout")
 
       action_disabled = false
-      action_area_shape.set_deferred("disabled", true)
 
 func _physics_process(delta):
   if movement_disabled:
@@ -100,6 +113,20 @@ func _talk_to(npc: Character):
   body_sprite.play("idle")
   dialog_canvas.start_dialog(self, npc)
 
+func _use(thing: Thing):
+  thing.use(self)
+  using = thing
+  body_sprite.visible = false
+  movement_disabled = true
+  action_icon.visible = false
+
+func _stop_using():
+  using.use_stopped(self)
+  using = null
+  body_sprite.visible = true
+  movement_disabled = false
+  action_icon.visible = true
+
 func start_monolog():
   body_sprite.play("idle")
   dialog_canvas.start_monolog(self)
@@ -124,10 +151,15 @@ func die():
     $CollisionShape2D.set_deferred("disabled", true)
 
 func _on_ActionArea_area_entered(area):
-  var node : Node2D = area.get_parent()
+  actionable = area.get_parent()
+  action_icon.position = actionable.position
 
-  if platformer:
-    node.queue_free()
+  if "height" in area:
+    action_icon.position.y -= int(area.height / 2)
   else:
-    if node.is_in_group("characters"):
-      _talk_to(node)
+    action_icon.position.y -= 24
+
+  action_icon.visible = true
+
+func _on_ActionArea_area_exited(area):
+  action_icon.visible = false

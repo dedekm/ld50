@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://src/Enemy.gd"
+}, {
+"base": "Node2D",
+"class": "Thing",
+"language": "GDScript",
+"path": "res://src/Thing.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
-"Enemy": ""
+"Enemy": "",
+"Thing": ""
 }
 
 [application]
