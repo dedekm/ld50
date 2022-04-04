@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/hero.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12, 12 )
+extents = Vector2( 10, 12 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 12, 12 )
