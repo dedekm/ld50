@@ -14,8 +14,9 @@ var action_disabled := false
 onready var level := get_node("/root/Level")
 onready var dialog_canvas := level.get_node("DialogCanvas")
 onready var action_area := $ActionArea
-onready var action_area_shape : CollisionShape2D = action_area.get_node("CollisionShape2D")
-onready var sprite := $AnimatedSprite
+onready var action_area_shape := $ActionArea/CollisionShape2D
+onready var body_sprite := $BodySprite
+onready var attack_sprite := $ActionArea/AttackSprite
 
 func _ready():
   if !level.platformer:
@@ -29,7 +30,17 @@ func _process(delta):
     if !action_disabled:
       action_disabled = true
       action_area_shape.set_deferred("disabled", false)
-      yield(get_tree().create_timer(0.3), "timeout")
+
+      if platformer:
+        attack_sprite.visible = true
+
+      yield(get_tree().create_timer(0.15), "timeout")
+
+      if platformer:
+        attack_sprite.visible = false
+
+      yield(get_tree().create_timer(0.15), "timeout")
+
       action_disabled = false
       action_area_shape.set_deferred("disabled", true)
 
@@ -74,14 +85,16 @@ func _physics_process(delta):
   velocity = move_and_slide(velocity, Vector2.UP)
 
   if velocity.x != 0 || velocity.y != 0:
-    sprite.play("move")
+    body_sprite.play("move")
   else:
-    sprite.play("idle")
+    body_sprite.play("idle")
 
   if velocity.x > 0:
-    sprite.flip_h = false
+    body_sprite.flip_h = false
+    attack_sprite.flip_h = false
   elif velocity.x < 0:
-    sprite.flip_h = true
+    body_sprite.flip_h = true
+    attack_sprite.flip_h = true
 
 func _talk_to(npc):
   dialog_canvas.start_dialog(self, npc, "test")
