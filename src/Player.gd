@@ -119,6 +119,7 @@ func _physics_process(delta):
 
 func _talk_to(npc: Character):
   body_sprite.play("idle")
+  action_icon.visible = false
   dialog_canvas.start_dialog(self, npc)
 
 func _use(thing: Thing):

@@ -101,7 +101,7 @@ func next_dialog_step():
 func stop_dialog():
   yield(get_tree().create_timer(0.25), "timeout")
   player.movement_disabled = false
-  npc.move()
+  player.action_icon.visible = true
   active = false
 
 func stop_monolog():
