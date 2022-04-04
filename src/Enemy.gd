@@ -10,6 +10,8 @@ var moving := true
 var start : Vector2
 var target : Vector2
 
+onready var height : int = $Hitbox/CollisionShape2D.shape.extents.y
+
 func _ready():
   var distance_to_target := direction * move_distance
   start = position

@@ -39,6 +39,7 @@ func _process(delta):
 
       if platformer:
         actionable.queue_free()
+        actionable = null
       else:
         if actionable.is_in_group("characters"):
           _talk_to(actionable)
@@ -152,14 +153,24 @@ func die():
 
 func _on_ActionArea_area_entered(area):
   actionable = area.get_parent()
-  action_icon.position = actionable.position
 
-  if "height" in area:
-    action_icon.position.y -= int(area.height / 2)
-  else:
-    action_icon.position.y -= 24
+  if !platformer:
+    action_icon.position = actionable.position
 
-  action_icon.visible = true
+    if "moving" in actionable:
+      actionable.moving = false
+
+    if "height" in actionable:
+      print(actionable.height)
+      action_icon.position.y -= int(actionable.height * 2)
+    else:
+      action_icon.position.y -= 24
+
+    action_icon.visible = true
 
 func _on_ActionArea_area_exited(area):
-  action_icon.visible = false
+  if !platformer:
+    action_icon.visible = false
+
+    if "moving" in actionable:
+      actionable.moving = true
