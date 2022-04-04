@@ -19,6 +19,7 @@ onready var action_area := $ActionArea
 onready var action_icon := level.get_node("ActionIcon")
 onready var action_area_shape := $ActionArea/CollisionShape2D
 onready var body_sprite := $BodySprite
+onready var body_attack_sprite := $BodyAttackSprite
 onready var attack_sprite := $ActionArea/AttackSprite
 
 func _ready():
@@ -34,29 +35,34 @@ func _process(delta):
     return
 
   if Input.is_action_just_pressed("action"):
-    if actionable && !action_disabled:
-      action_disabled = true
-
+    if !action_disabled:
       if platformer:
-        actionable.queue_free()
-        actionable = null
-      else:
+        action_disabled = true
+        attack_sprite.visible = true
+        body_sprite.visible = false
+        body_attack_sprite.visible = true
+        body_attack_sprite.frame = 0
+        body_attack_sprite.play("attack")
+
+        if actionable:
+          actionable.queue_free()
+          actionable = null
+
+        yield(get_tree().create_timer(0.15), "timeout")
+
+        attack_sprite.visible = false
+
+        yield(get_tree().create_timer(0.20), "timeout")
+
+        body_sprite.visible = true
+        body_attack_sprite.visible = false
+        body_attack_sprite.stop()
+        action_disabled = false
+      elif actionable:
         if actionable.is_in_group("characters"):
           _talk_to(actionable)
         elif actionable.is_in_group("things"):
           _use(actionable)
-
-      if platformer:
-        attack_sprite.visible = true
-
-      yield(get_tree().create_timer(0.15), "timeout")
-
-      if platformer:
-        attack_sprite.visible = false
-
-      yield(get_tree().create_timer(0.15), "timeout")
-
-      action_disabled = false
 
 func _physics_process(delta):
   if movement_disabled:
@@ -98,10 +104,11 @@ func _physics_process(delta):
 
   velocity = move_and_slide(velocity, Vector2.UP)
 
-  if velocity.x != 0 || velocity.y != 0:
-    body_sprite.play("move")
-  else:
-    body_sprite.play("idle")
+  if body_sprite.animation != "attack":
+    if velocity.x != 0 || velocity.y != 0:
+      body_sprite.play("move")
+    else:
+      body_sprite.play("idle")
 
   if velocity.x > 0:
     body_sprite.flip_h = false
@@ -161,7 +168,6 @@ func _on_ActionArea_area_entered(area):
       actionable.moving = false
 
     if "height" in actionable:
-      print(actionable.height)
       action_icon.position.y -= int(actionable.height * 2)
     else:
       action_icon.position.y -= 24
@@ -174,3 +180,5 @@ func _on_ActionArea_area_exited(area):
 
     if "moving" in actionable:
       actionable.moving = true
+
+  actionable = null
