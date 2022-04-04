@@ -84,9 +84,6 @@ func _physics_process(delta):
     sprite.flip_h = true
 
 func _talk_to(npc):
-  movement_disabled = true
-  npc.speed = 0
-
   dialog_canvas.start_dialog(self, npc, "test")
 
 func change_gamestyle():

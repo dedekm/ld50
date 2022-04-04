@@ -25,7 +25,6 @@ func _ready():
   player_portrait.set_texture(load("res://assets/portraits/portrait.png"))
 
   var file = File.new()
-  print(FILE_NAME)
   if file.file_exists(FILE_NAME):
     file.open(FILE_NAME, File.READ)
     var text = file.get_as_text()
@@ -36,6 +35,9 @@ func start_dialog(actor_one: Node, actor_two: Node, dialog_key: String):
   active = true
   player = actor_one
   npc = actor_two
+
+  player.movement_disabled = true
+  npc.stop()
 
   dialog = data[dialog_key]
   dialog_index = 0
@@ -74,7 +76,9 @@ func next_dialog_step():
 func stop_dialog():
   yield(get_tree().create_timer(0.25), "timeout")
   player.movement_disabled = false
+  npc.move()
   active = false
 
-func _set_text_position(actor: Node, rect: Node):
-  rect.rect_position = Vector2(actor.position.x - rect.rect_size.x / 2, actor.position.y - rect.rect_size.y * 2)
+func _set_text_position(actor: Node2D, rect: Control):
+  var position := actor.get_global_transform_with_canvas().origin
+  rect.rect_position = Vector2(position.x - rect.rect_size.x / 2, position.y - rect.rect_size.y * 2)
