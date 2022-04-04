@@ -4,36 +4,32 @@ class_name Enemy
 
 export var speed := 100
 export var move_distance := 200
+export var direction := Vector2(1, 0)
 
-var direction := Vector2(1, 0)
 var moving := true
 var start : Vector2
 var target : Vector2
 
 func _ready():
-  if direction.x:
-    direction.x *= pow(-1, randi() % 2)
-  if direction.y:
-    direction.y *= pow(-1, randi() % 2)
-
   var distance_to_target := direction * move_distance
-  start = position - distance_to_target
+  start = position
   target = position + distance_to_target
 
 func _physics_process (delta):
   if !moving || speed == 0:
     return
 
-  position.x = _move_to(position.x, target.x, speed * delta)
+  position = _move_to(position, target, speed * delta)
 
-  if position.x == target.x:
-    if target.x == start.x:
-      target.x = position.x + move_distance * 2 * direction.x
+  if position == target:
+    if target == start:
+      target = position + move_distance * direction
     else:
-      target.x = start.x
+      target = start
 
-func _move_to(current, to, step):
-  var new = current
+func _move_to(current: Vector2, to: Vector2, step_distance: float):
+  var new := current
+  var step := Vector2(step_distance * direction.x, step_distance * direction.y)
 
   if new < to:
     new += step

@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/characters/Spider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Level.gd" type="Script" id=3]
+[ext_resource path="res://src/characters/Strider.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/DialogCanvas.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/DialogCanvas.gd" type="Script" id=6]
 [ext_resource path="res://src/Map.tscn" type="PackedScene" id=7]
@@ -29,3 +31,12 @@ limit_top = 0
 limit_right = 3033
 limit_bottom = 1028
 editor_draw_limits = true
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Strider" parent="Characters" instance=ExtResource( 4 )]
+position = Vector2( 1356, 396 )
+
+[node name="Spider" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 756, 300 )
+move_distance = 72

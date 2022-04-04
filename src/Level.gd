@@ -7,7 +7,7 @@ onready var player := $Player
 
 func _ready():
   var size = OS.get_real_window_size()
-  print(size)
+
   if size.x < 640:
     OS.set_window_size(size * 4)
     OS.center_window()
