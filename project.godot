@@ -9,19 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Person",
+"base": "Node2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://src/Character.gd"
+}, {
+"base": "Character",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://src/Enemy.gd"
-}, {
-"base": "Node2D",
-"class": "Person",
-"language": "GDScript",
-"path": "res://src/Person.gd"
 } ]
 _global_script_class_icons={
-"Enemy": "",
-"Person": ""
+"Character": "",
+"Enemy": ""
 }
 
 [application]

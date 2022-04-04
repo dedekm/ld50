@@ -1,4 +1,8 @@
 {
+  "monolog": [
+    "Does it have to end?",
+    "Let's do something else..."
+  ],
   "test": [
     "Hello!",
     "Hello, stranger!",

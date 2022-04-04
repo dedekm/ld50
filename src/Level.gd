@@ -25,3 +25,6 @@ func _unhandled_input(event):
           get_tree().reload_current_scene()
         KEY_ESCAPE:
           get_tree().quit()
+
+func end():
+  print("THE END")

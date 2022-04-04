@@ -96,8 +96,17 @@ func _physics_process(delta):
     body_sprite.flip_h = true
     attack_sprite.flip_h = true
 
-func _talk_to(npc):
+func _talk_to(npc: Character):
+  body_sprite.play("idle")
   dialog_canvas.start_dialog(self, npc)
+
+func start_monolog():
+  body_sprite.play("idle")
+  dialog_canvas.start_monolog(self)
+
+func stop_monolog():
+  movement_disabled = false
+  change_gamestyle()
 
 func change_gamestyle():
   platformer = !platformer
@@ -115,7 +124,10 @@ func die():
     $CollisionShape2D.set_deferred("disabled", true)
 
 func _on_ActionArea_area_entered(area):
+  var node : Node2D = area.get_parent()
+
   if platformer:
-    area.get_parent().queue_free()
+    node.queue_free()
   else:
-    _talk_to(area.get_parent())
+    if node.is_in_group("characters"):
+      _talk_to(node)

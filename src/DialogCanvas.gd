@@ -4,8 +4,9 @@ const FILE_NAME = "res://data/dialogs.json"
 
 var active := false
 var player : Node2D
-var npc : Person
+var npc : Node2D
 var player_talking := true
+var monolog := false
 var dialog := []
 var dialog_index := 0
 var data : Dictionary
@@ -31,8 +32,9 @@ func _ready():
     data = parse_json(text)
     file.close()
 
-func start_dialog(actor_one: Node, actor_two: Node):
+func start_dialog(actor_one: Node2D, actor_two: Node2D):
   active = true
+  monolog = false
   player = actor_one
   npc = actor_two
 
@@ -49,6 +51,19 @@ func start_dialog(actor_one: Node, actor_two: Node):
   player_talking = true
   next_dialog_step()
 
+func start_monolog(actor: Node2D):
+  active = true
+  monolog = true
+  player = actor
+
+  player.movement_disabled = true
+  dialog = data["monolog"]
+  dialog_index = 0
+  
+  _set_text_position(player, player_text_rect)
+  player_talking = true
+  next_dialog_step()
+
 func _process(delta):
   if !active:
     return
@@ -61,7 +76,10 @@ func next_dialog_step():
   npc_text_rect.visible = false
 
   if dialog.size() == dialog_index:
-    stop_dialog()
+    if monolog:
+      stop_monolog()
+    else:
+      stop_dialog()
     return
 
   var text : String = dialog[dialog_index]
@@ -71,7 +89,7 @@ func next_dialog_step():
   else:
     player_talking = !player_talking
 
-  if player_talking:
+  if player_talking && !monolog:
     npc_text_rect.visible = true
     npc_text.bbcode_text = "[center]" + text + "[/center]"
   else:
@@ -84,6 +102,10 @@ func stop_dialog():
   yield(get_tree().create_timer(0.25), "timeout")
   player.movement_disabled = false
   npc.move()
+  active = false
+
+func stop_monolog():
+  player.stop_monolog()
   active = false
 
 func _set_text_position(actor: Node2D, rect: Control):
