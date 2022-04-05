@@ -155,6 +155,7 @@ func change_gamestyle():
 func die():
   if platformer:
     alive = false
+    body_sprite.modulate = Color("a45a5a")
     $CollisionShape2D.set_deferred("disabled", true)
 
 func body_sprite_play_idle():
