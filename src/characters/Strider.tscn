@@ -30,7 +30,7 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=6]
 custom_solver_bias = 1.0
-extents = Vector2( 5.5, 7 )
+extents = Vector2( 5, 6 )
 
 [node name="Strider" type="Node2D"]
 script = ExtResource( 1 )
@@ -42,13 +42,12 @@ move_distance = 48
 scale = Vector2( -1, 1 )
 frames = SubResource( 4 )
 animation = "move"
-frame = 2
+frame = 1
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( -0.5, 0 )
 shape = SubResource( 6 )
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]

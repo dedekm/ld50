@@ -82,9 +82,9 @@ dialog_name = "spider"
 move_distance = 72
 
 [node name="Spider5" parent="Characters" instance=ExtResource( 2 )]
-position = Vector2( 1116, 324 )
+position = Vector2( 1140, 324 )
 dialog_name = "spider"
-move_distance = 96
+move_distance = 72
 
 [node name="Spider6" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 996, 936 )
