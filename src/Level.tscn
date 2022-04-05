@@ -14,6 +14,7 @@
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
 platformer = false
+killzone = 2022
 
 [node name="DialogCanvas" parent="." instance=ExtResource( 5 )]
 script = ExtResource( 6 )
@@ -26,7 +27,7 @@ current = true
 limit_left = 0
 limit_top = 0
 limit_right = 3033
-limit_bottom = 1028
+limit_bottom = 1586
 editor_draw_limits = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
@@ -47,8 +48,31 @@ position = Vector2( 756, 300 )
 dialog_name = "test"
 move_distance = 72
 
+[node name="Spider2" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 996, 204 )
+dialog_name = "test"
+
+[node name="Spider3" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 1044, 84 )
+dialog_name = "test"
+
+[node name="Spider4" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 948, 540 )
+dialog_name = "test"
+move_distance = 72
+
+[node name="Spider5" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 1092, 324 )
+dialog_name = "test"
+move_distance = 96
+
+[node name="Spider6" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 996, 936 )
+dialog_name = "test"
+move_distance = 144
+
 [node name="Portal" parent="." instance=ExtResource( 8 )]
-position = Vector2( 324, 324 )
+position = Vector2( 2124, 444 )
 
 [node name="Deckchair" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1464, 900 )
