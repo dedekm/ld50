@@ -12,5 +12,25 @@
     ">Who are you?",
     "Testing dialog system...",
     "What?\nAre you crazy?"
+  ],
+  "spider": [
+    "Ahem!",
+    "*sizzitt* *sizzitt*",
+    "Hello there...",
+    ">So I was thinking...",
+    "*sizzitt* *sizzitt*",
+    "You look quite active!",
+    ">Would you know about\nany activity\nI could do?",
+    "*sizzitt* *sizzitt*",
+    "*sizzitt*",
+    ">Yeah! *sizzitt*",
+  ],
+  "strider": [
+    "Hello!",
+    "Ehe? Ehe?",
+    ">Look at ya, look at ya.",
+    ">Feelin good?",
+    "I guess...",
+    "U crazy boy! I'm tellin ya...",
   ]
 }
