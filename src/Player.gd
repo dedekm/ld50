@@ -176,7 +176,7 @@ func _on_ActionArea_area_entered(area):
     action_icon.position = actionable.position
 
     if "moving" in actionable:
-      actionable.moving = false
+      actionable.stop()
 
     if "height" in actionable:
       action_icon.position.y -= int(actionable.height * 2)
@@ -193,6 +193,6 @@ func _on_ActionArea_area_exited(area):
     action_icon.visible = false
 
     if "moving" in actionable:
-      actionable.moving = true
+      actionable.move()
 
   actionable = null

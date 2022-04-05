@@ -39,7 +39,6 @@ func start_dialog(actor_one: Node2D, actor_two: Node2D):
   monolog = 0
 
   player.movement_disabled = true
-  npc.stop()
 
   dialog = data[npc.dialog_name]
   dialog_index = 0
