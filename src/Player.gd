@@ -62,7 +62,7 @@ func _physics_process(delta):
   if movement_disabled:
     return
 
-  if position.y > level.killzone:
+  if platformer and position.y > level.killzone:
     get_tree().reload_current_scene()
 
   velocity.x = 0
@@ -142,9 +142,13 @@ func change_gamestyle():
   body_sprite_play_idle()
 
   if !platformer:
+    if level.camera:
+      level.camera.limit_bottom = level.four_way_camera_limit_bottom
     action_area_shape.shape.extents = Vector2(SIZE * 0.75, SIZE)
     action_area.position.x = SIZE * 0.75
   else:
+    if level.camera:
+      level.camera.limit_bottom = level.platformer_camera_limit_bottom
     action_area_shape.shape.extents = Vector2(SIZE / 2, SIZE / 2)
     action_area.position.x = SIZE
 

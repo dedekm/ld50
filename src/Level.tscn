@@ -15,7 +15,7 @@
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
 platformer = false
-killzone = 2022
+killzone = 704
 
 [node name="DialogCanvas" parent="." instance=ExtResource( 5 )]
 script = ExtResource( 6 )
@@ -27,8 +27,8 @@ position = Vector2( 190, 322 )
 current = true
 limit_left = 0
 limit_top = 0
-limit_right = 3033
-limit_bottom = 1586
+limit_right = 2928
+limit_bottom = 672
 editor_draw_limits = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]

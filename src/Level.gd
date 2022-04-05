@@ -4,6 +4,10 @@ export var platformer := true
 export var killzone := 672
 
 onready var player := $Player
+onready var camera := $Camera
+onready var platformer_camera_limit_bottom : int = $Camera.limit_bottom
+
+var four_way_camera_limit_bottom := 1504
 
 func _ready():
   var size = OS.get_real_window_size()
