@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-const GRAVITY = 800
-const SPEED = 200
+const GRAVITY = 750
+const SPEED = 180
 const JUMP = 300
 const SIZE = 24
 
