@@ -45,40 +45,40 @@ dialog_name = "strider"
 
 [node name="Strider2" parent="Characters" instance=ExtResource( 4 )]
 position = Vector2( 1572, 480 )
-dialog_name = "test"
+dialog_name = "strider"
 move_distance = 144
 
 [node name="Strider3" parent="Characters" instance=ExtResource( 4 )]
 position = Vector2( 1644, 408 )
-dialog_name = "test"
+dialog_name = "strider"
 move_distance = 72
 
 [node name="Strider4" parent="Characters" instance=ExtResource( 4 )]
 position = Vector2( 1632, 840 )
-dialog_name = "test"
+dialog_name = "strider"
 move_distance = 72
 
 [node name="Strider5" parent="Characters" instance=ExtResource( 4 )]
 position = Vector2( 1860, 408 )
-dialog_name = "test"
+dialog_name = "strider"
 move_distance = 96
 
 [node name="Spider" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 756, 300 )
-dialog_name = "test"
+dialog_name = "spider"
 move_distance = 72
 
 [node name="Spider2" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 996, 204 )
-dialog_name = "test"
+dialog_name = "spider"
 
 [node name="Spider3" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 1044, 84 )
-dialog_name = "test"
+dialog_name = "spider"
 
 [node name="Spider4" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 948, 540 )
-dialog_name = "test"
+dialog_name = "spider"
 move_distance = 72
 
 [node name="Spider5" parent="Characters" instance=ExtResource( 2 )]
@@ -88,7 +88,7 @@ move_distance = 96
 
 [node name="Spider6" parent="Characters" instance=ExtResource( 2 )]
 position = Vector2( 996, 936 )
-dialog_name = "test"
+dialog_name = "spider"
 move_distance = 144
 
 [node name="Portal" parent="." instance=ExtResource( 8 )]
