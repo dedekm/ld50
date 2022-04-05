@@ -26,7 +26,7 @@ position = Vector2( 190, 322 )
 current = true
 limit_left = 0
 limit_top = 0
-limit_right = 2928
+limit_right = 3000
 limit_bottom = 672
 editor_draw_limits = true
 
