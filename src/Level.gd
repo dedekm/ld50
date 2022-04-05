@@ -27,4 +27,8 @@ func _unhandled_input(event):
           get_tree().quit()
 
 func end():
-  print("THE END")
+  player.movement_disabled = true
+  player.visible = false
+  $FadeOut.position = $Camera.position
+  $FadeOut/AnimationPlayer.play('fade_out')
+  $FadeOut.visible = true

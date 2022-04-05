@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fonts/TinyUnicode.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+extra_spacing_bottom = -6
+extra_spacing_space = -1
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade_out"
+length = 2.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1.2 ),
+"update": 0,
+"values": [ Color( 0.0470588, 0.0470588, 0.0470588, 0 ), Color( 0.0470588, 0.0470588, 0.0470588, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Text:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.92549, 0.92549, 0.92549, 0 ), Color( 0.92549, 0.92549, 0.92549, 0 ), Color( 0.92549, 0.92549, 0.92549, 1 ) ]
+}
+
+[node name="FadeOut" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -240.0
+margin_top = -120.0
+margin_right = 240.0
+margin_bottom = 120.0
+color = Color( 0.0470588, 0.0470588, 0.0470588, 0.75 )
+
+[node name="Text" type="RichTextLabel" parent="."]
+modulate = Color( 0.92549, 0.92549, 0.92549, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -36.0
+margin_right = 96.0
+margin_bottom = 48.0
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]OK
+THE END
+Thanks for playing[/center]"
+text = "OK
+THE END
+Thanks for playing"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_out = SubResource( 1 )
