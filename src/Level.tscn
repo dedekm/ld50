@@ -48,7 +48,7 @@ dialog_name = "test"
 move_distance = 72
 
 [node name="Portal" parent="." instance=ExtResource( 8 )]
-position = Vector2( 2124, 444 )
+position = Vector2( 324, 324 )
 
 [node name="Deckchair" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1464, 900 )

@@ -1,7 +1,10 @@
 {
-  "monolog": [
+  "monolog_1": [
     "Does it have to end?",
     "Let's do something else..."
+  ],
+  "monolog_2": [
+    "Hurray"
   ],
   "test": [
     "Hello!",

@@ -6,7 +6,7 @@ var active := false
 var player : Node2D
 var npc : Node2D
 var player_talking := true
-var monolog := false
+var monolog : int
 var dialog := []
 var dialog_index := 0
 var data : Dictionary
@@ -34,9 +34,9 @@ func _ready():
 
 func start_dialog(actor_one: Node2D, actor_two: Node2D):
   active = true
-  monolog = false
   player = actor_one
   npc = actor_two
+  monolog = 0
 
   player.movement_disabled = true
   npc.stop()
@@ -51,13 +51,14 @@ func start_dialog(actor_one: Node2D, actor_two: Node2D):
   player_talking = true
   next_dialog_step()
 
-func start_monolog(actor: Node2D):
+func start_monolog(actor: Node2D, part: int):
   active = true
-  monolog = true
   player = actor
 
+  monolog = part
+
   player.movement_disabled = true
-  dialog = data["monolog"]
+  dialog = data["monolog_%d" % monolog]
   dialog_index = 0
   
   _set_text_position(player, player_text_rect)
@@ -77,7 +78,13 @@ func next_dialog_step():
 
   if dialog.size() == dialog_index:
     if monolog:
-      stop_monolog()
+      if monolog == 2:
+        stop_monolog()
+      else:
+        player.body_sprite.play("throw")
+        yield(player.body_sprite, "animation_finished")
+        player.body_sprite.play("idle_without")
+        start_monolog(player, 2)
     else:
       stop_dialog()
     return
