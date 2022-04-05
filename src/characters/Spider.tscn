@@ -39,7 +39,7 @@ extents = Vector2( 10, 5 )
 [node name="Spider" type="Node2D"]
 position = Vector2( 0, -5 )
 script = ExtResource( 1 )
-portrait_name = "strider_portrait"
+portrait_name = "spider_portrait"
 speed = 50
 move_distance = 48
 direction = Vector2( 0, 1 )
