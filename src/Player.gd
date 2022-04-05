@@ -19,7 +19,6 @@ onready var action_area := $ActionArea
 onready var action_icon := level.get_node("ActionIcon")
 onready var action_area_shape := $ActionArea/CollisionShape2D
 onready var body_sprite := $BodySprite
-onready var body_attack_sprite := $BodyAttackSprite
 onready var attack_sprite := $ActionArea/AttackSprite
 
 func _ready():
@@ -39,10 +38,7 @@ func _process(delta):
       if platformer:
         action_disabled = true
         attack_sprite.visible = true
-        body_sprite.visible = false
-        body_attack_sprite.visible = true
-        body_attack_sprite.frame = 0
-        body_attack_sprite.play("attack")
+        body_sprite.play("attack")
 
         if actionable:
           actionable.queue_free()
@@ -54,9 +50,7 @@ func _process(delta):
 
         yield(get_tree().create_timer(0.20), "timeout")
 
-        body_sprite.visible = true
-        body_attack_sprite.visible = false
-        body_attack_sprite.stop()
+        body_sprite.play("idle")
         action_disabled = false
       elif actionable:
         if actionable.is_in_group("characters"):
@@ -106,19 +100,17 @@ func _physics_process(delta):
 
   if body_sprite.animation != "attack":
     if velocity.x != 0 || velocity.y != 0:
-      body_sprite.play("move")
+      body_sprite_play_move()
     else:
-      body_sprite.play("idle")
+      body_sprite_play_idle()
 
   if velocity.x > 0:
     body_sprite.flip_h = false
-    attack_sprite.flip_h = false
   elif velocity.x < 0:
     body_sprite.flip_h = true
-    attack_sprite.flip_h = true
 
 func _talk_to(npc: Character):
-  body_sprite.play("idle")
+  body_sprite_play_idle()
   action_icon.visible = false
   dialog_canvas.start_dialog(self, npc)
 
@@ -138,14 +130,16 @@ func _stop_using():
 
 func start_monolog():
   body_sprite.play("idle")
-  dialog_canvas.start_monolog(self)
+  dialog_canvas.start_monolog(self, 1)
 
 func stop_monolog():
-  movement_disabled = false
   change_gamestyle()
+  movement_disabled = false
 
 func change_gamestyle():
   platformer = !platformer
+
+  body_sprite_play_idle()
 
   if !platformer:
     action_area_shape.shape.extents = Vector2(SIZE * 0.75, SIZE)
@@ -159,8 +153,24 @@ func die():
     alive = false
     $CollisionShape2D.set_deferred("disabled", true)
 
+func body_sprite_play_idle():
+  if platformer:
+    body_sprite.play("idle")
+  else:
+    body_sprite.play("idle_without")
+
+func body_sprite_play_move():
+  if platformer:
+    body_sprite.play("move")
+  else:
+    body_sprite.play("move_without")
+
 func _on_ActionArea_area_entered(area):
   actionable = area.get_parent()
+
+  if !actionable.is_in_group("characters") and !actionable.is_in_group("things"):
+    actionable = null
+    return
 
   if !platformer:
     action_icon.position = actionable.position
@@ -176,6 +186,9 @@ func _on_ActionArea_area_entered(area):
     action_icon.visible = true
 
 func _on_ActionArea_area_exited(area):
+  if !actionable or !actionable.is_in_group("characters") and !actionable.is_in_group("things"):
+    return
+
   if !platformer:
     action_icon.visible = false
 
